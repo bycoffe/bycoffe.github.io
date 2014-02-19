@@ -1,6 +1,10 @@
 ;(function() {
-  var quiz = bf_quiz.quizes[1],
+  var quiz,
       matches = {};
+  // Use last quiz
+  for (k in bf_quiz.quizes) {
+    quiz = bf_quiz.quizes[k];
+  }
   function listOptions() {
     var options = [];
     for (k in quiz.results) {
