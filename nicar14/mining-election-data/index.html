@@ -1,0 +1,760 @@
+<!doctype html>
+<html lang="en">
+
+	<head>
+		<meta charset="utf-8">
+
+		<title>Mining Election Data - Aaron Bycoffe</title>
+
+		<meta name="description" content="A framework for easily creating beautiful presentations using HTML">
+		<meta name="author" content="Hakim El Hattab">
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<link rel="stylesheet" href="css/reveal.min.css">
+		<link rel="stylesheet" href="css/theme/moon.css" id="theme">
+
+		<!-- For syntax highlighting -->
+		<link rel="stylesheet" href="lib/css/zenburn.css">
+
+    <style type="text/css">
+      .lowercase {
+        text-transform: none;
+      }
+    </style>
+
+		<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+		<script>
+			if( window.location.search.match( /print-pdf/gi ) ) {
+				var link = document.createElement( 'link' );
+				link.rel = 'stylesheet';
+				link.type = 'text/css';
+				link.href = 'css/print/pdf.css';
+				document.getElementsByTagName( 'head' )[0].appendChild( link );
+			}
+		</script>
+
+		<!--[if lt IE 9]>
+		<script src="lib/js/html5shiv.js"></script>
+		<![endif]-->
+	</head>
+
+	<body>
+
+		<div class="reveal">
+
+			<!-- Any section element inside of this container is displayed as a slide -->
+			<div class="slides">
+
+        <section>
+          <h1>Mining Election Data</h1>
+          <h2>Money, Polling and Results</h2>
+          <br/>
+          <h3>Aaron Bycoffe</h3>
+          <h3>D.C. Legal Hackers, 2014-05-07</h4>
+        </section>
+
+        <section>
+          <h1>About Me</h1>
+          <h2>Aaron Bycoffe</h2>
+          <p>Data editor at The Huffington Post</p>
+          <p>Twitter: @bycoffe</p>
+          <p>E-mail: bycoffe@gmail.com</p>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <ul>
+            <li>The Rules</li>
+            <li>The Data</li>
+            <li>The Tools</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Rules</h2>
+          <h3>Federal candidates can accept:</h3>
+          <ul>
+            <li>$2,600 from an individual per election</li>
+            <li>$5,000 from a national or state party committee per election</li>
+            <li>$5,000 or $2,600 per election from a PAC, depending on the type</li>
+          </ul>
+          <small>Source: http://www.fec.gov/pages/brochures/contriblimits.shtml</small>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Rules</h2>
+          <h3>Independent-expenditure-only committees<br/>("super PACs"):</h3>
+          <ul>
+            <li>Can raise contributions of unlimited amounts from individuals and corporations</li>
+            <li>Cannot contribute to candidates</li>
+            <li>Cannot coordinate with candidates</li>
+          </ul>
+          <small>Source: http://www.fec.gov/press/press2011/ieoc_alpha.shtml</small>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Rules</h2>
+          <ul>
+            <li>Most committees file reports electronically &mdash; but not Senate candidates</li>
+            <li>Campaign committees generally file quarterly, and more frequently just before an election</li>
+            <li>PACs can file monthly or quarterly</li>
+            <li>Most independent expenditures must be reported within 48 or 24 hours of public distribution</li>
+          </ul>
+          <small>Source: http://www.fec.gov/info/report_dates_2014.shtml</small>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data</h2>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data</h2>
+          <img src="/fec-summary.png">
+          <small>Source: http://docquery.fec.gov/cgi-bin/dcdev/forms/C00237198/919782/</small>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data: FECh</h2>
+          <p>http://nytimes.github.io/Fech/</p>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data: FECh</h2>
+              <pre>
+<code>
+require 'fech'
+
+filing = Fech::Filing.new(919782)
+filing.download
+
+pp filing.summary
+</code>
+              </pre>
+              <pre>
+
+<code>
+{:form_type=>"F3N",
+ :filer_committee_id_number=>"C00237198",
+ :committee_name=>"Friends of John Boehner",
+ :change_of_address=>nil,
+ :street_1=>"7908 Cincinnati Dayton Road",
+ :street_2=>"Suite I",
+ :city=>"West Chester",
+ :state=>"OH",
+ :zip_code=>"450696628",
+ :election_state=>nil,
+ :election_district=>nil,
+ :report_code=>"Q1",
+ :election_code=>nil,
+ :election_date=>nil,
+ :state_of_election=>nil,
+ :coverage_from_date=>"20140101",
+ :coverage_through_date=>"20140331",
+ :treasurer_last_name=>"Lisker",
+ :treasurer_first_name=>"Lisa",
+ :treasurer_middle_name=>nil,
+ :treasurer_prefix=>nil,
+ :treasurer_suffix=>nil,
+ :date_signed=>"20140415",
+ :col_a_total_contributions_no_loans=>"813302.46",
+ :col_a_total_contributions_refunds=>"13415.00",
+ :col_a_net_contributions=>"799887.46",
+ :col_a_total_operating_expenditures=>"614051.07",
+ :col_a_total_offset_to_operating_expenditures=>"223.87",
+ :col_a_net_operating_expenditures=>"613827.20",
+ :col_a_cash_on_hand_close_of_period=>"3300728.50",
+ :col_a_debts_to=>"0.00",
+ :col_a_debts_by=>"0.00",
+ :col_a_individual_contributions_itemized=>"241520.72",
+ :col_a_individual_contributions_unitemized=>"266781.74",
+ :col_a_total_individual_contributions=>"508302.46",
+ :col_a_political_party_contributions=>"0.00",
+ :col_a_pac_contributions=>"305000.00",
+ :col_a_candidate_contributions=>"0.00",
+ :col_a_total_contributions=>"813302.46",
+ :col_a_transfers_from_authorized=>"970488.66",
+ :col_a_candidate_loans=>"0.00",
+ :col_a_other_loans=>"0.00",
+ :col_a_total_loans=>"0.00",
+ :col_a_offset_to_operating_expenditures=>"223.87",
+ :col_a_other_receipts=>"2172.20",
+ :col_a_total_receipts=>"1786187.19",
+ :col_a_operating_expenditures=>"614051.07",
+ :col_a_transfers_to_authorized=>"0.00",
+ :col_a_candidate_loan_repayments=>"0.00",
+ :col_a_other_loan_repayments=>"0.00",
+ :col_a_total_loan_repayments=>"0.00",
+ :col_a_refunds_to_individuals=>"13415.00",
+ :col_a_refunds_to_party_committees=>"0.00",
+ :col_a_refunds_to_other_committees=>"0.00",
+ :col_a_total_refunds=>"13415.00",
+ :col_a_other_disbursements=>"735794.88",
+ :col_a_total_disbursements=>"1363260.95",
+ :col_a_cash_beginning_reporting_period=>"2877802.26",
+ :col_a_total_disbursements_period=>"1363260.95",
+ :col_a_cash_on_hand_close=>"3300728.50",
+ :col_b_total_contributions_no_loans=>"5479145.16",
+ :col_b_total_contributions_refunds=>"112595.00",
+ :col_b_net_contributions=>"5366550.16",
+ :col_b_total_operating_expenditures=>"4360293.71",
+ :col_b_total_offset_to_operating_expenditures=>"26920.63",
+ :col_b_net_operating_expenditures=>"4333373.08",
+ :col_b_individual_contributions_itemized=>"1425633.15",
+ :col_b_individual_contributions_unitemized=>"2522043.81",
+ :col_b_total_individual_contributions=>"3947676.96",
+ :col_b_political_party_contributions=>"0.00",
+ :col_b_pac_contributions=>"1531468.20",
+ :col_b_candidate_contributions=>"0.00",
+ :col_b_total_contributions=>"5479145.16",
+ :col_b_transfers_from_authorized=>"7535454.14",
+ :col_b_candidate_loans=>"0.00",
+ :col_b_other_loans=>"0.00",
+ :col_b_total_loans=>"0.00",
+ :col_b_offset_to_operating_expenditures=>"26920.63",
+ :col_b_other_receipts=>"2897.02",
+ :col_b_total_receipts=>"13044416.95",
+ :col_b_operating_expenditures=>"4360293.71",
+ :col_b_transfers_to_authorized=>"0.00",
+ :col_b_candidate_loan_repayments=>"0.00",
+ :col_b_other_loan_repayments=>"0.00",
+ :col_b_total_loan_repayments=>"0.00",
+ :col_b_refunds_to_individuals=>"82345.00",
+ :col_b_refunds_to_party_committees=>"0.00",
+ :col_b_refunds_to_other_committees=>"30250.00",
+ :col_b_total_refunds=>"112595.00",
+ :col_b_other_disbursements=>"6408753.41",
+ :col_b_total_disbursements=>"10881642.12"}
+</code>
+          </pre>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data</h2>
+          <img src="/11ai.png">
+          <small>Source: http://docquery.fec.gov/cgi-bin/dcdev/forms/C00237198/919782/sa/11AI</small>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data: FECh</h2>
+          <pre>
+<code>
+require 'fech'
+
+filing = Fech::Filing.new(919782)
+filing.download
+
+filing.rows_like(/sa11ai/) do |row|
+  pp row
+end
+</code>
+          </pre>
+          <pre>
+<code>
+{:form_type=>"SA11AI",
+ :filer_committee_id_number=>"C00237198",
+ :transaction_id=>"SA11.564515",
+ :back_reference_tran_id_number=>nil,
+ :back_reference_sched_name=>nil,
+ :entity_type=>"IND",
+ :contributor_organization_name=>"",
+ :contributor_last_name=>"ADAMOW",
+ :contributor_first_name=>"WALTER",
+ :contributor_middle_name=>"L.",
+ :contributor_prefix=>"MR.",
+ :contributor_suffix=>"",
+ :contributor_street_1=>"1750 COUNTY LINE ROAD",
+ :contributor_street_2=>"",
+ :contributor_city=>"HUNTINGDON VALLEY",
+ :contributor_state=>"PA",
+ :contributor_zip_code=>"190061702",
+ :election_code=>"P2014",
+ :election_other_description=>nil,
+ :contribution_date=>"20140103",
+ :contribution_amount=>"50.00",
+ :contribution_aggregate=>"550.00",
+ :contribution_purpose_descrip=>"CONTRIBUTION",
+ :contributor_employer=>"RETIRED",
+ :contributor_occupation=>"RETIRED",
+ :donor_committee_fec_id=>nil,
+ :donor_committee_name=>nil,
+ :donor_candidate_fec_id=>nil,
+ :donor_candidate_last_name=>"",
+ :donor_candidate_first_name=>"",
+ :donor_candidate_middle_name=>"",
+ :donor_candidate_prefix=>"",
+ :donor_candidate_suffix=>"",
+ :donor_candidate_office=>nil,
+ :donor_candidate_state=>nil,
+ :donor_candidate_district=>nil,
+ :conduit_name=>"  ",
+ :conduit_street1=>"",
+ :conduit_street2=>"",
+ :conduit_city=>"",
+ :conduit_state=>nil,
+ :conduit_zip_code=>nil,
+ :memo_code=>nil,
+ :memo_text_description=>"",
+ :reference_code=>nil}
+</code>
+          </pre>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data</h2>
+          <img src="/efile-search.png">
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data: FECh-Search</h2>
+          <p>https://github.com/huffpostdata/fech-search</p>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data: FECh-Search</h2>
+          <pre>
+<code>
+require 'fech-search'
+
+search = Fech::Search.new(:committee_id => "C00237198")
+
+pp search.results
+</code>
+          </pre>
+          <pre>
+<code>
+[#<Fech::SearchResult:0x000001008e97d8
+  @amended_by=nil,
+  @committee_id="C00237198",
+  @committee_name="FRIENDS OF JOHN BOEHNER",
+  @date_filed=#<Date: 2014-05-03 (4913561/2,0,2299161)>,
+  @date_format="%m/%d/%Y",
+  @description="48 HOUR NOTICE",
+  @filing_id="923225",
+  @form_type="F6N",
+  @period=nil>,
+ #<Fech::SearchResult:0x000001008d5300
+  @amended_by=nil,
+  @committee_id="C00237198",
+  @committee_name="FRIENDS OF JOHN BOEHNER",
+  @date_filed=#<Date: 2014-05-01 (4913557/2,0,2299161)>,
+  @date_format="%m/%d/%Y",
+  @description="48 HOUR NOTICE",
+  @filing_id="923028",
+  @form_type="F6N",
+  @period=nil>,
+ #<Fech::SearchResult:0x0000010086d7c8
+  @amended_by=nil,
+  @committee_id="C00237198",
+  @committee_name="FRIENDS OF JOHN BOEHNER",
+  @date_filed=#<Date: 2014-04-24 (4913543/2,0,2299161)>,
+  @date_format="%m/%d/%Y",
+  @description="PRE-PRIMARY",
+  @filing_id="922439",
+  @form_type="F3N",
+  @period=
+   {:from=>%<63bc6228Date: 2014-04-01 (4913497/2,0,2299161)>,
+    :to=>#<Date: 2014-04-16 (4913527/2,0,2299161)>}>,
+ #<Fech::SearchResult:0x000001011011a0
+  @amended_by=nil,
+  @committee_id="C00237198",
+  @committee_name="FRIENDS OF JOHN BOEHNER",
+  @date_filed=#<Date: 2014-04-23 (4913541/2,0,2299161)>,
+  @date_format="%m/%d/%Y",
+  @description="48 HOUR NOTICE",
+  @filing_id="922296",
+  @form_type="F6N",
+  @period=nil>,
+ #<Fech::SearchResult:0x00000102925b00
+  @amended_by=nil,
+  @committee_id="C00237198",
+  @committee_name="FRIENDS OF JOHN BOEHNER",
+  @date_filed=#<Date: 2014-04-15 (4913525/2,0,2299161)>,
+  @date_format="%m/%d/%Y",
+  @description="APR QUARTERLY",
+  @filing_id="919782",
+  @form_type="F3N",
+  @period=
+   {:from=>%<63bc6228Date: 2014-01-01 (4913317/2,0,2299161)>,
+    :to=>#<Date: 2014-03-31 (4913495/2,0,2299161)>}>
+]
+</code>
+          </pre>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data: FECh-Search</h2>
+          <pre>
+<code>
+require 'fech-search'
+
+search = Fech::Search.new(:committee_id => "C00237198")
+results = search.results.select { |x| x.amended_by.nil? && x.form_type.match(/f3/i) && x.period[:from] >= Date.new(2014, 1, 1) }
+
+pp results
+</code>
+          </pre>
+          <pre>
+<code>
+[#<Fech::SearchResult:0x000001028ae9d8
+  @amended_by=nil,
+  @committee_id="C00237198",
+  @committee_name="FRIENDS OF JOHN BOEHNER",
+  @date_filed=#<Date: 2014-04-24 (4913543/2,0,2299161)>,
+  @date_format="%m/%d/%Y",
+  @description="PRE-PRIMARY",
+  @filing_id="922439",
+  @form_type="F3N",
+  @period=
+   {:from=>%<35466c1fDate: 2014-04-01 (4913497/2,0,2299161)>,
+    :to=>#<Date: 2014-04-16 (4913527/2,0,2299161)>}>,
+ #<Fech::SearchResult:0x0000010289b798
+  @amended_by=nil,
+  @committee_id="C00237198",
+  @committee_name="FRIENDS OF JOHN BOEHNER",
+  @date_filed=#<Date: 2014-04-15 (4913525/2,0,2299161)>,
+  @date_format="%m/%d/%Y",
+  @description="APR QUARTERLY",
+  @filing_id="919782",
+  @form_type="F3N",
+  @period=
+   {:from=>%<35466c1fDate: 2014-01-01 (4913317/2,0,2299161)>,
+    :to=>#<Date: 2014-03-31 (4913495/2,0,2299161)>}>]
+</code>
+          </pre>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>The Data: FECh-Search</h2>
+          <pre>
+<code>
+require 'fech-search'
+
+search = Fech::Search.new(:committee_id => "C00237198")
+results = search.results.select { |x| x.amended_by.nil? && x.form_type.match(/f3/i) && x.period[:from] >= Date.new(2014, 1, 1) }
+
+filings = results.map { |x| x.filing.download }
+</code>
+          </pre>
+        </section>
+
+        <section>
+          <h1>Campaign Finance</h1>
+          <h2>Resources</h2>
+          <ul>
+            <li>Federal Election Commission: <a href="http://fec.gov">http://fec.gov</a>
+            <li>Center for Responsive Politics: <a href="http://www.opensecrets.org">http://opensecrets.org</a></li>
+            <li>Sunlight Foundation: <a href="http://sunlightfoundation.com/tools">http://sunlightfoundation.com/tools</a></li>
+            <li>FECh: <a href="http://nytimes.github.io/Fech/">http://nytimes.github.io/Fech</a></li>
+            <li>FECh-Search: <a href="https://github.com/huffpostdata/fech-search">https://github.com/huffpostdata/fech-search</a></li>
+            <li>Itemizer: <a href="http://itemizer.herokuapp.com/">http://itemizer.herokuapp.com</a></li>
+            <li>State agencies: <a href="http://bitly.com/bundles/bycoffe/1">http://bitly.com/bundles/bycoffe/1</a></li>
+            <li>National Institute on Money in State Politics: <a href="http://www.followthemoney.org">http://www.followthemoney.org</a></li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Polling</h1>
+        </section>
+
+        <section>
+          <h1>Polling</h1>
+          <h2>Pollster</h2>
+          <p>All publicly available political polls that claim to provide representative samples of the population or electorate.</p>
+          <img src="/pollster.png">
+          <small>Source: http://elections.huffingtonpost.com/pollster/2014-north-carolina-senate-republican-primary</small>
+        </section>
+
+        <section>
+          <h1>Polling</h1>
+          <h2>Pollster</h2>
+          <h3>API</h3>
+          <p>http://elections.huffingtonpost.com/pollster/api</p>
+          <ul>
+            <li>List all polls in the database.</li>
+            <li>Filter by date and topic.</li>
+            <li>Get poll averages over time.</li>
+          </ul>
+          <p></p>
+          <p>Libraries available for Ruby, Python, R</p>
+        </section>
+
+        <section>
+          <h1>Polling</h1>
+          <h2>Pollster</h2>
+          <h3>API</h3>
+          <pre>
+<code>
+from pollster import Pollster
+
+pollster = Pollster()
+chart = pollster.charts(state='NC', topic='2014-senate-gop-primary')[0]
+
+print [[x['choice'], x['value']] for x in chart.estimates]
+</code>
+          </pre>
+          <pre>
+<code>
+[[u'Tillis', 44.7],
+ [u'Brannon', 21.5],
+ [u'Harris', 14.4],
+ [u'Grant', 4.5],
+ [u'Alexander', 2.0],
+ [u'Kryn', 1.0],
+ [u'Snyder', 1.0],
+ [u'Undecided', 9.7]]
+</code>
+          </pre>
+
+        </section>
+
+        <section>
+          <h1>Polling</h1>
+          <h2>Pollster</h2>
+          <h3>API</h3>
+          <pre>
+<code>
+from pollster import Pollster
+
+pollster = Pollster()
+chart = pollster.charts(state='NC', topic='2014-senate-gop-primary')[0]
+
+poll = chart.polls()[0]
+print poll.questions
+</code>
+          </pre>
+          <pre>
+<code>
+[{u'chart': u'2014-north-carolina-senate-republican-primary',
+  u'name': u'2014 North Carolina Senate Republican Primary',
+  u'state': u'NC',
+  u'subpopulations': [{u'margin_of_error': 3.2,
+                       u'name': u'Likely Voters - Republican',
+                       u'observations': 925,
+                       u'responses': [{u'choice': u'Alexander',
+                                       u'first_name': u'Ted',
+                                       u'incumbent': False,
+                                       u'last_name': u'Alexander',
+                                       u'party': u'Rep',
+                                       u'value': 2},
+                                      {u'choice': u'Bradshaw',
+                                       u'first_name': u'Alex',
+                                       u'incumbent': False,
+                                       u'last_name': u'Bradshaw',
+                                       u'party': u'Rep',
+                                       u'value': 0},
+                                      {u'choice': u'Brannon',
+                                       u'first_name': u'Greg',
+                                       u'incumbent': False,
+                                       u'last_name': u'Brannon',
+                                       u'party': u'Rep',
+                                       u'value': 28},
+                                      {u'choice': u'Grant',
+                                       u'first_name': u'Heather',
+                                       u'incumbent': False,
+                                       u'last_name': u'Grant',
+                                       u'party': u'Rep',
+                                       u'value': 4},
+                                      {u'choice': u'Harris',
+                                       u'first_name': u'Mark',
+                                       u'incumbent': False,
+                                       u'last_name': u'Harris',
+                                       u'party': u'Rep',
+                                       u'value': 15},
+                                      {u'choice': u'Kryn',
+                                       u'first_name': u'Edward',
+                                       u'incumbent': False,
+                                       u'last_name': u'Kryn',
+                                       u'party': u'Rep',
+                                       u'value': 1},
+                                      {u'choice': u'Snyder',
+                                       u'first_name': u'Jim',
+                                       u'incumbent': False,
+                                       u'last_name': u'Snyder',
+                                       u'party': u'Rep',
+                                       u'value': 1},
+                                      {u'choice': u'Tillis',
+                                       u'first_name': u'Thom',
+                                       u'incumbent': False,
+                                       u'last_name': u'Tillis',
+                                       u'party': u'Rep',
+                                       u'value': 40},
+                                      {u'choice': u'Undecided',
+                                       u'first_name': None,
+                                       u'incumbent': None,
+                                       u'last_name': None,
+                                       u'party': None,
+                                       u'value': 11}]}],
+  u'topic': u'2014-senate-gop-primary'}]
+</code>
+          </pre>
+
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>(And Beyond)</h2>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>Who Won?</h2>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>Who Won?</h2>
+          <p>There is no central, open place to get live election results</p>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>Who Won?</h2>
+          <ul>
+            <li>Media organizations, usually publishing results from The Associated Press</li>
+            <li>State sites (usually the secretary of state)</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>Who Won?</h2>
+          <img src="/nyt-results.png">
+          <small>Source: http://elections.nytimes.com/2014/results/primaries/north-carolina</small>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>Who Won?</h2>
+          <img src="/huffpost-results.png">
+          <small>Source: http://elections.huffingtonpost.com/2013/results</small>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>Who Won?</h2>
+          <img src="/nc-results.png">
+          <small>Source: http://enr.ncsbe.gov/ElectionResults/</small>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>Who Won?</h2>
+          <img src="/mickens.png">
+          <small>Source: https://twitter.com/frank_mickens</small>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>Who Won?</h2>
+          <img src="/taylor.png">
+          <small>Source: https://twitter.com/JessicaTaylor/status/443527823006109696</small>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>(And Beyond)</h2>
+          <h3>Historical data</h3>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>(And Beyond)</h2>
+          <h3>Historical data</h3>
+          <br/>
+          <h3>OpenElections</h3>
+          <p>"Our goal is to create the first free, comprehensive, standardized, linked set of election data for the United States, including federal and statewide offices."</p>
+          <p>http://blog.openelections.net</p>
+          <p>https://github.com/openelections</p>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>(And Beyond)</h2>
+          <h3>Historical data</h3>
+          <br/>
+          <h3>Dave Leip's U.S. Election Atlas</h3>
+          <p>Historical county-level results for president, senate, governor.</p>
+          <p>http://uselectionatlas.org</p>
+        </section>
+
+        <section>
+          <h1>Election Day</h1>
+          <h2>(And Beyond)</h2>
+          <h3>Historical data</h3>
+          <h4>Elsewhere:</h4>
+          <ul>
+            <li>FEC: http://www.fec.gov/pubrec/electionresults.shtml</li>
+            <li>National Archives: http://www.archives.gov/federal-register/electoral-college/historical.html</li>
+          </ul>
+        </section>
+
+        <section>
+          <h1>Questions?</h1>
+        </section>
+
+        <section>
+          <h1>About Me</h1>
+          <h2>Aaron Bycoffe</h2>
+          <p>Data editor at The Huffington Post</p>
+          <p>Twitter: @bycoffe</p>
+          <p>E-mail: bycoffe@gmail.com</p>
+        </section>
+
+			</div>
+
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.min.js"></script>
+
+		<script>
+
+			// Full list of configuration options available here:
+			// https://github.com/hakimel/reveal.js#configuration
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+        slideNumber: true,
+
+				theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+				transition: 'none',//Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+
+				// Parallax scrolling
+				// parallaxBackgroundImage: 'https://s3.amazonaws.com/hakim-static/reveal-js/reveal-parallax-1.jpg',
+				// parallaxBackgroundSize: '2100px 900px',
+
+				// Optional libraries used to extend on reveal.js
+				dependencies: [
+					{ src: 'lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: 'plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: 'plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+					{ src: 'plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }
+				]
+			});
+
+		</script>
+
+	</body>
+</html>
