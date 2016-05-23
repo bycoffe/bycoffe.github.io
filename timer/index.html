@@ -1,0 +1,100 @@
+<!doctype html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.1.0/css/bootstrap-combined.min.css">
+    <style type="text/css">
+    </style>
+
+  </head>
+  <body>
+    <h1 style="" id="countup">Timer</h1>
+
+    <div class="row">
+      <a id="button" class="btn btn-success btn-large btn-block">Start</a>
+    </div>
+
+    <table class="table" id="timer">
+      <thead>
+        <tr>
+          <th>Start</th>
+          <th>Stop</th>
+          <th>Length</th>
+          <th>Frequency</th>
+        </tr>
+      </thead>
+      <tbody>
+      </tbody>
+    </table>
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="http://momentjs.com/downloads/moment.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+          var formatSeconds = function(secs) {
+          var hours = Math.floor(secs / (60 * 60));
+          hours = hours < 10 ? '0' + hours : hours;
+          var minutes = Math.floor(secs % (60 * 60) / 60);
+          minutes = minutes < 10 ? '0' + minutes : minutes;
+          var seconds = Math.ceil((secs % (60 * 60)) % 60);
+          seconds = seconds < 10 ? '0' + seconds : seconds;
+          return [hours, minutes, seconds].join(':')
+          }
+
+          var Ticker = {
+ticking: false,
+
+start: function() {
+this.ticking = true;
+startTime = new Date();
+setInterval(function() {
+  var secs = Math.round((new Date() - startTime)/1000);
+  $("#countup").html(formatSeconds(secs));
+  }, 1000);
+},
+  }
+
+var Timer = {
+times: [],
+
+       start: function() {
+         $("#button").html('Stop').removeClass('btn-success').addClass('btn-danger');
+         this.startTime = moment(new Date());
+         $("#timer tbody").prepend("<tr><td>" + this.startTime.format('h:mm:ss') + "</td><td></td><td></td><td>" + this.freq() + "</td>");
+       },
+
+freq: function() {
+        if (this.times.length > 0) {
+          return formatSeconds(Math.round((this.startTime - this.times[this.times.length-1].stop) / 1000));
+        } else {
+          return '--';
+        }
+      },
+
+stop: function() {
+        $("#button").html('Start').removeClass('btn-danger').addClass('btn-success');
+        this.stopTime = moment(new Date());
+        var diff = Math.round((this.stopTime - this.startTime) / 1000);
+        $("#timer tbody tr:first").remove();
+        $("#timer tbody").prepend("<tr><td>" + this.startTime.format('h:mm:ss') + "</td><td>" + this.stopTime.format('hh:mm:ss') + "</td><td>" + formatSeconds(diff) + "</td><td>" + this.freq() + "</td></tr>");
+        this.times.push({
+start: this.startTime,
+stop: this.stopTime,
+});
+}
+};
+
+$("#button").bind('click', function() {
+    if($(this).html() === 'Start') {
+    Timer.start();
+    if (!Ticker.ticking) {
+    Ticker.start();
+    }
+    } else {
+    Timer.stop();
+    };
+    });
+});
+</script>
+</body>
+</html>
