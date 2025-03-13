@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import SocialLink from '../components/SocialLink'
+import type { NextPage } from 'next'
 
-export default function Home() {
+const Home: NextPage = () => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-gradient-to-br from-white to-gray-100">
       <Head>
@@ -32,3 +33,5 @@ export default function Home() {
     </div>
   )
 }
+
+export default Home

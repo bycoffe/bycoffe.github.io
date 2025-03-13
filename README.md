@@ -1,6 +1,6 @@
 # Aaron Bycoffe's Personal Website
 
-This is a modern personal website built with Next.js and Tailwind CSS, deployed to GitHub Pages.
+This is a modern personal website built with Next.js, TypeScript, and Tailwind CSS, deployed to GitHub Pages.
 
 ## Getting Started
 
@@ -20,17 +20,19 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## Making Changes
 
-- Edit `pages/index.js` to update the home page content
-- Edit `components/SocialLink.js` to modify the link styling
+- Edit `pages/index.tsx` to update the home page content
+- Edit `components/SocialLink.tsx` to modify the link styling
 - Edit `styles/globals.css` to change global styles
 
 ## Adding Pages
 
 Create a new file in the `pages` directory, for example:
 
-```javascript
-// pages/about.js
-export default function About() {
+```typescript
+// pages/about.tsx
+import type { NextPage } from 'next'
+
+const About: NextPage = () => {
   return (
     <div>
       <h1>About Me</h1>
@@ -38,6 +40,8 @@ export default function About() {
     </div>
   )
 }
+
+export default About
 ```
 
 ## Deploying to GitHub Pages
@@ -67,8 +71,19 @@ npm run build
 
 This will create a static export in the `out` directory.
 
+## Type Checking
+
+To run TypeScript type checking:
+
+```bash
+npm run typecheck
+```
+
+This will check all TypeScript files for type errors without emitting any output files.
+
 ## Technology Stack
 
 - **Framework**: [Next.js](https://nextjs.org/)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
 - **CSS**: [Tailwind CSS](https://tailwindcss.com/)
 - **Deployment**: GitHub Pages via GitHub Actions

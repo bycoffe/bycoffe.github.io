@@ -1,6 +1,12 @@
 import Link from 'next/link'
+import { ReactNode } from 'react'
 
-export default function SocialLink({ href, children }) {
+interface SocialLinkProps {
+  href: string;
+  children: ReactNode;
+}
+
+export default function SocialLink({ href, children }: SocialLinkProps) {
   return (
     <Link 
       href={href}
