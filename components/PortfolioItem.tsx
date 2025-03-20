@@ -24,7 +24,7 @@ export default function PortfolioItem({ title, url, linkTitle, thumbnail, date }
     >
       <div className="aspect-[4/3] overflow-hidden">
         <img
-          src={`images/${thumbnail}`} 
+          src={`/images/${thumbnail}`} 
           alt={`Thumbnail showing a part of the ${title} interactive project`}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />
