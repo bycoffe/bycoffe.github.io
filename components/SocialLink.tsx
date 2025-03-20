@@ -10,7 +10,7 @@ export default function SocialLink({ href, children }: SocialLinkProps) {
   return (
     <Link 
       href={href}
-      className="px-4 py-2 rounded-md bg-gray-100 text-blue-600 hover:bg-gray-200 transition-colors"
+      className="px-4 py-2 rounded-md bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800 transition-colors"
       target={href.startsWith('http') ? "_blank" : undefined}
       rel={href.startsWith('http') ? "noopener noreferrer" : undefined}
     >
