@@ -1,6 +1,8 @@
 import { getPortfolioData } from '../../components/PortfolioData';
 import SocialLink from '../../components/SocialLink'
 import PortfolioItem from '../../components/PortfolioItem';
+import Link from 'next/link'
+import { HiMail } from 'react-icons/hi'
 
 export const metadata = {
   title: 'Aaron Bycoffe - Portfolio',
@@ -15,12 +17,16 @@ export default async function PortfolioPage() {
     <div className="min-h-screen flex flex-col items-center py-24 px-6 bg-gradient-to-br from-gray-50 to-gray-100">
       <header className="w-full max-w-[1200px] mb-20 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-gray-800 to-gray-600">
-          Aaron Bycoffe
+          <Link href="/">
+            Aaron Bycoffe
+          </Link>
         </h1>
         <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-5">Portfolio</p>
-        <SocialLink href="mailto:bycoffe@gmail.com">
-          bycoffe@gmail.com
-        </SocialLink>
+        <div className="flex justify-center">
+          <SocialLink href="mailto:bycoffe@gmail.com" icon={<HiMail />}>
+            bycoffe@gmail.com
+          </SocialLink>
+        </div>
       </header>
       <div>
       </div>
