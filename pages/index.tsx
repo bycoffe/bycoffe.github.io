@@ -8,7 +8,7 @@ const Home: NextPage = () => {
       <Head>
         <title>Aaron Bycoffe</title>
         <meta name="description" content="Aaron Bycoffe's personal website" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/favicon.svg" />
       </Head>
 
       <header className="w-full max-w-[1200px] mb-20 text-center">

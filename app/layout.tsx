@@ -4,6 +4,9 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'Aaron Bycoffe',
   description: 'Aaron Bycoffe\'s personal website',
+  icons: {
+    icon: '/favicon.svg',
+  },
 };
 
 export default function RootLayout({
