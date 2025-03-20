@@ -159,5 +159,19 @@
     "linkTitle": "View on archive.org",
     "thumbnail": "pollster-ratings-thumbnail.png",
     "date": "2023-03-09"
+  },
+  {
+    "title": "2012 Election Results",
+    "url": "https://web.archive.org/web/20121110021617/http://elections.huffingtonpost.com/2012/results",
+    "linkTitle": "View on archive.org",
+    "thumbnail": "2012-election-results-thumbnail.png",
+    "date": "2012-11-06"
+  },
+  {
+    "thumbnail": "2012-election-outlook-thumbnail.png",
+    "title": "2012 Presidential Election Outlook",
+    "linkTitle": "View on archive.org",
+    "thumbnail": "2012-election-outlook-thumbnail.png",
+    "date": "2012-05-02"
   }
 ]
