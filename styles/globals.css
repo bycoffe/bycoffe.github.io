@@ -37,4 +37,9 @@ body {
   .portfolio-item:active {
     transform: scale(0.98);
   }
+  
+  /* Hide the non-hover text content on touch devices */
+  .portfolio-item > div:last-child {
+    opacity: 0;
+  }
 }

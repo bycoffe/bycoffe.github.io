@@ -40,7 +40,7 @@ export default function PortfolioItem({ title, url, linkTitle, thumbnail, date }
           {linkTitle}
         </span>
       </div>
-      <div className="p-5 bg-white">
+      <div className="p-5 bg-white transition-opacity duration-300 group-hover:opacity-0">
         <h2 className="text-gray-800 text-lg font-semibold mb-2">{title}</h2>
         <time dateTime={date} className="text-gray-500 text-sm block mb-2">
           {formatDate(date)}
