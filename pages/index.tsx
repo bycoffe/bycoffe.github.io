@@ -1,9 +1,9 @@
-import Head from 'next/head'
-import SocialLink from '../components/SocialLink'
-import type { NextPage } from 'next'
-import { HiMail } from 'react-icons/hi'
-import { BsFileEarmarkText } from 'react-icons/bs'
-import { FaLinkedin, FaGithub } from 'react-icons/fa'
+import Head from 'next/head';
+import SocialLink from '../components/SocialLink';
+import type { NextPage } from 'next';
+import { HiMail } from 'react-icons/hi';
+import { BsFileEarmarkText } from 'react-icons/bs';
+import { FaLinkedin, FaGithub } from 'react-icons/fa';
 
 const Home: NextPage = () => {
   return (
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

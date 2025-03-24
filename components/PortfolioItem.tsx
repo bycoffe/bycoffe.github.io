@@ -47,5 +47,5 @@ export default function PortfolioItem({ title, url, linkTitle, thumbnail, date }
         </time>
       </div>
     </a>
-  )
+  );
 }

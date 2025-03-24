@@ -1,8 +1,8 @@
 import { getPortfolioData } from '../../components/PortfolioData';
-import SocialLink from '../../components/SocialLink'
+import SocialLink from '../../components/SocialLink';
 import PortfolioItem from '../../components/PortfolioItem';
-import Link from 'next/link'
-import { HiMail } from 'react-icons/hi'
+import Link from 'next/link';
+import { HiMail } from 'react-icons/hi';
 
 export const metadata = {
   title: 'Aaron Bycoffe - Portfolio',

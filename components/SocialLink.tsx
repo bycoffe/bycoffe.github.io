@@ -1,11 +1,11 @@
-import Link from 'next/link'
-import { ReactNode } from 'react'
+import Link from 'next/link';
+import { ReactNode } from 'react';
 
 interface SocialLinkProps {
   href: string;
   children: ReactNode;
   icon?: ReactNode;
-}
+};
 
 export default function SocialLink({ href, children, icon }: SocialLinkProps) {
   return (
@@ -18,5 +18,5 @@ export default function SocialLink({ href, children, icon }: SocialLinkProps) {
       {icon && <span className="text-lg">{icon}</span>}
       {children}
     </Link>
-  )
+  );
 }
